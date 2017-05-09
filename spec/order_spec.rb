@@ -6,8 +6,14 @@ require './models/order'
 describe Order do
   subject { Order.new material }
   let(:material) { Material.new 'HON/TEST001/010' }
+
   let(:standard_delivery) { Delivery.new(:standard, 10) }
   let(:express_delivery) { Delivery.new(:express, 20) }
+
+  let(:broadcaster_1) {Broadcaster.new(1, 'Viacom')}
+  let(:broadcaster_2) {Broadcaster.new(2, 'Disney')}
+  let(:broadcaster_3) {Broadcaster.new(3, 'Discovery')}
+  let(:broadcaster_4) {Broadcaster.new(4, 'Horse and Country')}
 
   context 'empty' do
     it 'costs nothing' do
@@ -17,13 +23,19 @@ describe Order do
 
   context 'with items' do
     it 'returns the total cost of all items' do
-      broadcaster_1 = Broadcaster.new(1, 'Viacom')
-      broadcaster_2 = Broadcaster.new(2, 'Disney')
-
       subject.add broadcaster_1, standard_delivery
       subject.add broadcaster_2, express_delivery
 
       expect(subject.total_cost).to eq(30)
+    end
+
+    it 'calculates the total cost applying the correct discount promotion' do
+      subject.add broadcaster_1, standard_delivery
+      subject.add broadcaster_2, standard_delivery
+      subject.add broadcaster_3, standard_delivery
+      subject.add broadcaster_4, express_delivery
+
+      expect(subject.total_cost).to eq(45.0)
     end
   end
 end
