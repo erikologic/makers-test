@@ -1,3 +1,5 @@
+require './models/discount'
+
 class Order
   COLUMNS = {
     broadcaster: 20,
@@ -5,11 +7,12 @@ class Order
     price: 8
   }.freeze
 
-  attr_accessor :material, :items
+  attr_accessor :material, :items, :discounts_gauge
 
   def initialize(material)
     self.material = material
     self.items = []
+    self.discounts_gauge = Discount.new(self)
   end
 
   def add(broadcaster, delivery)
@@ -40,21 +43,14 @@ class Order
     end.join("\n")
   end
 
-  private
-
   def items_cost
     items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
   end
 
+  private
+
   def get_discounts
-    discount = 0.0
-
-    express_count = items.count { |_, delivery| delivery.name == :express }
-    discount += 5 * express_count if express_count >= 2
-
-    discount += (items_cost.to_f - discount) / 100 * 10 if items_cost > 30
-
-    discount
+    self.discounts_gauge.calculate
   end
 
   def output_separator
