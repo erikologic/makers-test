@@ -17,7 +17,7 @@ class Order
   end
 
   def total_cost
-    items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
+    items_cost - get_discounts.to_f
   end
 
   def output
@@ -41,6 +41,14 @@ class Order
   end
 
   private
+
+  def items_cost
+    items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
+  end
+
+  def get_discounts
+    items_cost.to_f / 100 * 10 if items_cost > 30
+  end
 
   def output_separator
     @output_separator ||= COLUMNS.map { |_, width| '-' * width }.join(' | ')
