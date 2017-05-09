@@ -17,7 +17,7 @@ class Order
   end
 
   def total_cost
-    items_cost - get_discounts.to_f
+    items_cost - get_discounts
   end
 
   def output
@@ -47,7 +47,14 @@ class Order
   end
 
   def get_discounts
-    items_cost.to_f / 100 * 10 if items_cost > 30
+    discount = 0.0
+
+    express_count = items.count { |_, delivery| delivery.name == :express }
+    discount += 5 * express_count if express_count >= 2
+
+    discount += (items_cost.to_f - discount) / 100 * 10 if items_cost > 30
+
+    discount
   end
 
   def output_separator
