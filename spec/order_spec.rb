@@ -29,21 +29,7 @@ describe Order do
       expect(subject.total_cost).to eq(30)
     end
 
-    it 'calculates the total cost applying a 10% off on order above 30$' do
-      subject.add broadcaster_1, standard_delivery
-      subject.add broadcaster_2, standard_delivery
-      subject.add broadcaster_3, standard_delivery
-      subject.add broadcaster_4, express_delivery
-
-      expect(subject.total_cost).to eq(45.0)
-    end
-
-    it 'calculates the total cost applying a discount of 5$ when more than 2 express_delivery are choosen' do
-      subject.add broadcaster_1, express_delivery
-      subject.add broadcaster_2, express_delivery
-      subject.add broadcaster_3, express_delivery
-
-      expect(subject.total_cost).to eq(40.5)
+    it 'apply discounts to the order' do
     end
   end
 end
