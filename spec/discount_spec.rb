@@ -2,6 +2,7 @@ require './models/broadcaster'
 require './models/delivery'
 require './models/material'
 require './models/order'
+require './models/discount'
 
 describe Discount do
   let(:order) { Order.new material }

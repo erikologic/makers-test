@@ -1,5 +1,3 @@
-require './models/discount'
-
 class Order
   COLUMNS = {
     broadcaster: 20,
@@ -7,12 +5,11 @@ class Order
     price: 8
   }.freeze
 
-  attr_accessor :material, :items, :discounts_gauge
+  attr_accessor :material, :items, :discounts
 
   def initialize(material)
     self.material = material
     self.items = []
-    self.discounts_gauge = Discount.new(self)
   end
 
   def add(broadcaster, delivery)
@@ -50,7 +47,7 @@ class Order
   private
 
   def get_discounts
-    self.discounts_gauge.calculate
+    self.discounts ? self.discounts.calculate : 0
   end
 
   def output_separator
