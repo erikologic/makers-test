@@ -1,9 +1,10 @@
 require './models/broadcaster'
 require './models/delivery'
 require './models/material'
+require './models/discount'
 require './models/order'
 
-describe Order do
+describe 'Order object features tests' do
   subject { Order.new material }
   let(:material) { Material.new 'HON/TEST001/010' }
 
@@ -30,15 +31,14 @@ describe Order do
         expect(subject.total_cost).to eq(30)
       end
 
-      it 'calls calculate method of discounts object, applying discounts to the order' do
-        discounts = double(:discount, calculate: 5)
-        subject.discounts = discounts
+      it 'apply the correct discounts to the order' do
+        subject.discount = Discount.new(subject)
 
-        subject.add broadcaster_1, standard_delivery
+        subject.add broadcaster_1, express_delivery
         subject.add broadcaster_2, express_delivery
+        subject.add broadcaster_3, express_delivery
 
-        expect(subject.total_cost).to eq(25)
-        expect(discounts).to have_received(:calculate)
+        expect(subject.total_cost).to eq(40.5)
       end
     end
   end

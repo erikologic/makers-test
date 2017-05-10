@@ -5,7 +5,7 @@ class Order
     price: 8
   }.freeze
 
-  attr_accessor :material, :items, :discounts
+  attr_accessor :material, :items, :discount
 
   def initialize(material)
     self.material = material
@@ -17,7 +17,7 @@ class Order
   end
 
   def total_cost
-    items_cost - get_discounts
+    items_cost - get_discount
   end
 
   def output
@@ -46,8 +46,8 @@ class Order
 
   private
 
-  def get_discounts
-    self.discounts ? self.discounts.calculate : 0
+  def get_discount
+    self.discount ? self.discount.calculate : 0
   end
 
   def output_separator
