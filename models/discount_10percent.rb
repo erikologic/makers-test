@@ -1,10 +1,6 @@
-class Discount10Percent
-  attr_accessor :order
+require './models/discount_abstraction'
 
-  def initialize(order)
-    self.order = order
-  end
-
+class Discount10Percent < DiscountAbstraction
   def calculate(discount_before = 0)
     current_total = order.items_cost - discount_before
     (current_total > 30) ? (current_total * 0.1) : 0
