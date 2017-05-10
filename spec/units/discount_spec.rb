@@ -1,20 +1,17 @@
-require './models/broadcaster'
-require './models/delivery'
-require './models/material'
 require './models/order'
 require './models/discount'
 
 describe Discount do
   let(:order) { Order.new material }
-  let(:material) { Material.new 'HON/TEST001/010' }
+  let(:material) { double(:material, identifier: 'HON/TEST001/010') }
 
-  let(:standard_delivery) { Delivery.new(:standard, 10) }
-  let(:express_delivery) { Delivery.new(:express, 20) }
+  let(:standard_delivery) { double(:delivery, name: :standard, price: 10) }
+  let(:express_delivery) { double(:delivery, name: :express, price: 20) }
 
-  let(:broadcaster_1) {Broadcaster.new(1, 'Viacom')}
-  let(:broadcaster_2) {Broadcaster.new(2, 'Disney')}
-  let(:broadcaster_3) {Broadcaster.new(3, 'Discovery')}
-  let(:broadcaster_4) {Broadcaster.new(4, 'Horse and Country')}
+  let(:broadcaster_1) { double(:broadcaster, id: 1, name: 'Viacom') }
+  let(:broadcaster_2) { double(:broadcaster, id: 2, name: 'Disney') }
+  let(:broadcaster_3) { double(:broadcaster, id: 3, name: 'Discovery') }
+  let(:broadcaster_4) { double(:broadcaster, id: 4, name: 'Horse and Country') }
 
   subject { Discount.new(order)}
 
