@@ -1,7 +1,6 @@
 require './models/broadcaster'
 require './models/delivery'
 require './models/material'
-require './models/discount'
 require './models/discount_manager'
 require './models/discount_express_delivery'
 require './models/discount_10percent'
@@ -32,16 +31,6 @@ describe 'Order object features tests' do
         subject.add broadcaster_2, express_delivery
 
         expect(subject.total_cost).to eq(30)
-      end
-
-      it 'apply the correct discounts to the order' do
-        subject.discount = Discount.new(subject)
-
-        subject.add broadcaster_1, express_delivery
-        subject.add broadcaster_2, express_delivery
-        subject.add broadcaster_3, express_delivery
-
-        expect(subject.total_cost).to eq(40.5)
       end
 
       it 'can use discount_express_delivery objects' do
