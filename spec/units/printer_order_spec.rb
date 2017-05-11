@@ -1,7 +1,7 @@
 require './models/printer_order'
 require './models/order'
 
-describe 'Order object features tests' do
+describe PrinterOrder do
   let(:order) { Order.new material }
   let(:material) { double(:material, identifier: 'HON/TEST001/010') }
 
@@ -12,7 +12,7 @@ describe 'Order object features tests' do
   let(:broadcaster_2) { double(:broadcaster, id: 2, name: 'Disney') }
   let(:broadcaster_3) { double(:broadcaster, id: 3, name: 'Disney') }
 
-  subject { PrinterOrder.new(order) }
+  subject { described_class.new(order) }
 
   describe '#output' do
     context 'empty' do
