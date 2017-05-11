@@ -38,7 +38,6 @@ You can either run it through:
 - `ruby run.rb`
 
 ## Backlog
-Having more time I would have liked:
+Having more time I would have liked to:
 - extrapolate abstract behaviours from PrinterOrder, so to have a more dynamic Printer system
 - add names to the Discount objects in order to be able to show them in the order report
-- 
