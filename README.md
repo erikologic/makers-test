@@ -22,9 +22,11 @@ Therefore, I used the same approach that I would take in a real environment.
 I started with changing the implementation as less as possible, writing tests first, then 'go to green' and after refactor.
 
 ## The outcome
-A Discount can be added as a single object to Order, or multiple Discount can be packed in a DiscountManager which can then be added to an Order.  
-Because DiscountManager share a similar interface to Discount, it's implementation doesn't require extra coding at all.  
-Also, a DiscountManager can be initialized and many Discount objects can be registered, and the same DiscountManager can be used on several Order objects, thus making it easier to create a discount campaign.
+A Discount can be initialized and then used with several Orders.
+
+Also, a DiscountManager can be initialized and many Discount objects can be registered within it.  
+Then, the same DiscountManager can be used on several Order objects, thus making it easier to create a discount campaign and apply it to several Orders.  
+Because DiscountManager share a similar interface to Discount, it's implementation doesn't add any extra levels of complexity on top the code.    
 
 ## Installation
 
