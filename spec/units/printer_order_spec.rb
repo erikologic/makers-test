@@ -42,7 +42,9 @@ describe PrinterOrder do
     end
     context 'with items and applicable discounts' do
       it 'prints a list of items, total discount applied and final cost' do
-        order.discount = DiscountExpressDelivery.new(order)
+        discount = double (:discount)
+        allow(discount).to receive(:calculate) {5}
+        order.discount = discount
 
         order.add broadcaster_1, express_delivery
         order.add broadcaster_2, express_delivery

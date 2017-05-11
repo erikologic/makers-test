@@ -1,10 +1,7 @@
-require './models/discount_abstraction'
-
-class DiscountManager < DiscountAbstraction
+class DiscountManager
   attr_accessor :discounts
 
-  def initialize(order)
-    super
+  def initialize
     self.discounts = []
   end
 
@@ -12,9 +9,9 @@ class DiscountManager < DiscountAbstraction
     discounts << discount_obj
   end
 
-  def calculate(discount_before = 0)
+  def calculate(order, discount_before = 0)
     discounts.inject(discount_before) do |discount_total, discount_obj|
-      discount_total += discount_obj.calculate(discount_total)
+      discount_total += discount_obj.calculate(order, discount_total)
     end
   end
 end

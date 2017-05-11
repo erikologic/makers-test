@@ -15,7 +15,7 @@ class Order
   end
 
   def output
-    self.printer.output
+    printer.output
   end
 
   def items_cost
@@ -23,6 +23,6 @@ class Order
   end
 
   def get_discount
-    self.discount ? self.discount.calculate : 0
+    discount ? discount.calculate(self) : 0
   end
 end

@@ -21,14 +21,16 @@ describe 'Order object features tests' do
 
   let(:printer) { PrinterOrder.new(subject) }
 
+  let(:discount_manager) { DiscountManager.new }
+  before do
+    discount_manager.add DiscountExpressDelivery.new
+    discount_manager.add Discount10Percent.new
+  end
+
   describe "User Stories" do
 
     context "when sending an item to 3 broadcasters via Standard Delivery and 1 broadcaster via Express Delivery" do
       it "the total should be $45.00" do
-        discount_manager = DiscountManager.new(subject)
-        discount_manager.add DiscountExpressDelivery.new(subject)
-        discount_manager.add Discount10Percent.new(subject)
-
         subject.discount = discount_manager
 
         subject.add broadcaster_1, standard_delivery
@@ -41,10 +43,6 @@ describe 'Order object features tests' do
     end
     context "when sending an item to 3 broadcasters via Express Delivery" do
       it "the total should be $40.50" do
-        discount_manager = DiscountManager.new(subject)
-        discount_manager.add DiscountExpressDelivery.new(subject)
-        discount_manager.add Discount10Percent.new(subject)
-
         subject.discount = discount_manager
 
         subject.add broadcaster_1, express_delivery
@@ -71,7 +69,7 @@ describe 'Order object features tests' do
       end
 
       it 'can use discount_express_delivery objects' do
-        subject.discount = DiscountExpressDelivery.new(subject)
+        subject.discount = DiscountExpressDelivery.new
 
         subject.add broadcaster_1, express_delivery
         subject.add broadcaster_2, express_delivery
@@ -81,7 +79,7 @@ describe 'Order object features tests' do
       end
 
       it 'can use discount_10percent objects' do
-        subject.discount = Discount10Percent.new(subject)
+        subject.discount = Discount10Percent.new
 
         subject.add broadcaster_1, express_delivery
         subject.add broadcaster_2, express_delivery
@@ -91,10 +89,6 @@ describe 'Order object features tests' do
       end
 
       it 'can use discount_manager objects' do
-        discount_manager = DiscountManager.new(subject)
-        discount_manager.add DiscountExpressDelivery.new(subject)
-        discount_manager.add Discount10Percent.new(subject)
-
         subject.discount = discount_manager
 
         subject.add broadcaster_1, express_delivery
@@ -136,7 +130,7 @@ describe 'Order object features tests' do
       it 'prints a list of items, total discount applied and final cost' do
         subject.printer = printer
 
-        subject.discount = DiscountExpressDelivery.new(subject)
+        subject.discount = DiscountExpressDelivery.new
 
         subject.add broadcaster_1, express_delivery
         subject.add broadcaster_2, express_delivery
