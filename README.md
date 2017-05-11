@@ -2,53 +2,43 @@
 
 ## The challenge
 
-We have a system that delivers advertising materials to broadcasters. 
+We have a system that delivers advertising materials to broadcasters.
 
 Advertising Material is uniquely identified by a 'Clock' number e.g.
 
 * `WNP/SWCL001/010`
 * `ZDW/EOWW005/010`
 
-Our sales team have some new promotions they want to offer so 
+Our sales team have some new promotions they want to offer so
 we need to introduce a mechanism for applying Discounts to orders.
 
 Promotions like this can and will change over time so we need the solution to be flexible.
 
-### Broadcasters
+## My approach
+There were some example code provided by Honeycomb.  
+My idea was to pretend this code was the one already in production.  
 
-These are the Broadcasters we deliver to
+Therefore, I used the same approach that I would take in a real environment.  
+I started with changing the implementation as less as possible, writing tests first, then 'go to green' and after refactor.
 
-* Viacom
-* Disney
-* Discovery
-* ITV
-* Channel 4
-* Bike Channel
-* Horse and Country
+## The outcome
+A Discount can be added as a single object to Order, or multiple Discount can be packed in a DiscountManager which can then be added to an Order.
+Because DiscountManager share a similar interface to Discount, it's implementation doesn't require extra coding at all.
+Also, a DiscountManager can be initialized and many Discount objects can be registered, and the same DiscountManager can be used on several Order objects, thus making it easier to create a discount campaign.
 
+## Installation
 
-### Delivery Products
+- Download repo: `git clone ########`
+- You might need to install used Ruby version: `rvm install ruby-2.3.3`
+- Install all dependencies: `bundle install`
 
-* Standard Delivery: $10
-* Express Delivery: $20
+## Running
+You can either run it through:
+- `rspec`
+- `ruby run.rb`
 
-### Discounts
-
-* Send 2 or more materials via express delivery and the price for express delivery drops to $15
-* Spend over $30 to get 10% off
-
-### What we want from you
-
-Provide a means of defining and applying various discounts to the cost of delivering material to broadcasters.
-
-We don't need any UI for this, we just need you to show us how it would work through its API.
-
-## Examples
-
-Based on the both Discounts applied, the following examples should be valid:
-
-* send `WNP/SWCL001/010` to Disney, Discovery, Viacom via Standard Delivery and Horse and Country via Express Delivery
-    based on the defined Discounts the total should be $45.00
-
-* send `ZDW/EOWW005/010` to Disney, Discovery, Viacom via Express Delivery
-     based on the defined Discounts the total should be $40.50
+## Backlog
+Having more time I would have liked:
+- extrapolate abstract behaviours from PrinterOrder, so to have a more dynamic Printer system
+- add names to the Discount objects in order to be able to show them in the order report
+- 
