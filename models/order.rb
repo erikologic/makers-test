@@ -15,7 +15,7 @@ class Order
   end
 
   def output
-    printer.output
+    printer.output(self)
   end
 
   def items_cost

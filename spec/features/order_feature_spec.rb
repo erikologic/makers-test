@@ -19,9 +19,10 @@ describe 'Order object features tests' do
   let(:broadcaster_3) {Broadcaster.new(3, 'Discovery')}
   let(:broadcaster_4) {Broadcaster.new(4, 'Horse and Country')}
 
-  let(:printer) { PrinterOrder.new(subject) }
+  let(:printer) { PrinterOrder.new }
 
   let(:discount_manager) { DiscountManager.new }
+
   before do
     discount_manager.add DiscountExpressDelivery.new
     discount_manager.add Discount10Percent.new

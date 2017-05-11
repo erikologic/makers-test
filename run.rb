@@ -24,10 +24,11 @@ discount_manager = DiscountManager.new
 discount_manager.add DiscountExpressDelivery.new
 discount_manager.add Discount10Percent.new
 
-####### FIRST ORDER
-puts "First Order"
+printer = PrinterOrder.new
+
+puts '####### FIRST ORDER'
 order1 = Order.new(material_wnp)
-order1.printer = PrinterOrder.new(order1)
+order1.printer = printer
 order1.discount = discount_manager
 
 order1.add broadcaster_disney, standard_delivery
@@ -38,11 +39,10 @@ order1.add broadcaster_horse_and_country, express_delivery
 print order1.output
 print "\n\n\n\n"
 
-####### SECOND ORDER
-puts "Second Order"
+puts '####### SECOND ORDER'
 
 order2 = Order.new(material_zdw)
-order2.printer = PrinterOrder.new(order2)
+order2.printer = printer
 order2.discount = discount_manager
 
 order2.add broadcaster_disney, express_delivery

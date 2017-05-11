@@ -12,13 +12,13 @@ describe PrinterOrder do
   let(:broadcaster_2) { double(:broadcaster, id: 2, name: 'Disney') }
   let(:broadcaster_3) { double(:broadcaster, id: 3, name: 'Disney') }
 
-  subject { described_class.new(order) }
+  subject { described_class.new }
 
   describe '#output' do
     context 'empty' do
       it 'prints empty cart message' do
         order.printer = subject
-        expect(subject.output).to eq(PrinterOrder::MESSAGES[:empty_cart])
+        expect(subject.output(order)).to eq(PrinterOrder::MESSAGES[:empty_cart])
       end
     end
     context 'with items' do
@@ -37,7 +37,7 @@ describe PrinterOrder do
           #{order.items[1][1].price}.*
           #{order.items_cost}.*
           }xm
-        expect(subject.output).to match(expectation)
+        expect(subject.output(order)).to match(expectation)
       end
     end
     context 'with items and applicable discounts' do
@@ -61,7 +61,7 @@ describe PrinterOrder do
           #{order.get_discount}.*
           #{order.total_cost}.*
           }xm
-        expect(subject.output).to match(expectation)
+        expect(subject.output(order)).to match(expectation)
       end
     end
   end

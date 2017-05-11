@@ -9,13 +9,7 @@ class PrinterOrder
     empty_cart: "Your cart is empty, please add some items"
   }.freeze
 
-  attr_accessor :order
-
-  def initialize(order)
-    self.order = order
-  end
-
-  def output
+  def output(order)
     return MESSAGES[:empty_cart] if order.items.count == 0
 
     [].tap do |result|
