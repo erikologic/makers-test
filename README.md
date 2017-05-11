@@ -1,8 +1,8 @@
 # Honeycomb Engineering Test - Makers Edition
 
 ## The challenge
-
-We have a system that delivers advertising materials to broadcasters.
+From Honeycomb:  
+"We have a system that delivers advertising materials to broadcasters.
 
 Advertising Material is uniquely identified by a 'Clock' number e.g.
 
@@ -12,7 +12,7 @@ Advertising Material is uniquely identified by a 'Clock' number e.g.
 Our sales team have some new promotions they want to offer so
 we need to introduce a mechanism for applying Discounts to orders.
 
-Promotions like this can and will change over time so we need the solution to be flexible.
+Promotions like this can and will change over time so we need the solution to be flexible."
 
 ## My approach
 There were some example code provided by Honeycomb.  
@@ -22,8 +22,8 @@ Therefore, I used the same approach that I would take in a real environment.
 I started with changing the implementation as less as possible, writing tests first, then 'go to green' and after refactor.
 
 ## The outcome
-A Discount can be added as a single object to Order, or multiple Discount can be packed in a DiscountManager which can then be added to an Order.
-Because DiscountManager share a similar interface to Discount, it's implementation doesn't require extra coding at all.
+A Discount can be added as a single object to Order, or multiple Discount can be packed in a DiscountManager which can then be added to an Order.  
+Because DiscountManager share a similar interface to Discount, it's implementation doesn't require extra coding at all.  
 Also, a DiscountManager can be initialized and many Discount objects can be registered, and the same DiscountManager can be used on several Order objects, thus making it easier to create a discount campaign.
 
 ## Installation
