@@ -1,7 +1,7 @@
 require './models/order'
 
 describe Order do
-  subject { Order.new material }
+  subject { described_class.new material }
   let(:material) { double(:material, identifier: 'HON/TEST001/010') }
 
   let(:standard_delivery) { double(:delivery, name: :standard, price: 10) }
@@ -10,6 +10,16 @@ describe Order do
   let(:broadcaster_1) { double(:broadcaster, id: 1, name: 'Viacom') }
   let(:broadcaster_2) { double(:broadcaster, id: 2, name: 'Disney') }
 
+  let(:printer) {double(:printer)}
+
+  describe '#output' do
+    it 'calls output method on the printer object' do
+      subject.printer = printer
+      allow(printer).to receive(:output)
+      subject.output
+      expect(printer).to have_received(:output)
+    end
+  end
   describe '#total_cost' do
     context 'empty' do
       it 'costs nothing' do

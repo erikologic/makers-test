@@ -4,6 +4,7 @@ require './models/material'
 require './models/discount_manager'
 require './models/discount_express_delivery'
 require './models/discount_10percent'
+require './models/printer_order'
 require './models/order'
 
 describe 'Order object features tests' do
@@ -17,6 +18,8 @@ describe 'Order object features tests' do
   let(:broadcaster_2) {Broadcaster.new(2, 'Disney')}
   let(:broadcaster_3) {Broadcaster.new(3, 'Discovery')}
   let(:broadcaster_4) {Broadcaster.new(4, 'Horse and Country')}
+
+  let(:printer) { PrinterOrder.new(subject) }
 
   describe '#total_cost' do
     context 'empty' do
@@ -71,11 +74,14 @@ describe 'Order object features tests' do
   describe '#output' do
     context 'empty' do
       it 'prints empty cart message' do
-        expect(subject.output).to eq(Order::MESSAGES[:empty_cart])
+        subject.printer = printer
+        expect(subject.output).to eq(PrinterOrder::MESSAGES[:empty_cart])
       end
     end
     context 'with items' do
       it 'prints a list of items and total cost' do
+        subject.printer = printer
+
         subject.add broadcaster_1, standard_delivery
         subject.add broadcaster_2, express_delivery
 
@@ -93,6 +99,8 @@ describe 'Order object features tests' do
     end
     context 'with items and applicable discounts' do
       it 'prints a list of items, total discount applied and final cost' do
+        subject.printer = printer
+
         subject.discount = DiscountExpressDelivery.new(subject)
 
         subject.add broadcaster_1, express_delivery
