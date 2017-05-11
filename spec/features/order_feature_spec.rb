@@ -24,7 +24,6 @@ describe 'Order object features tests' do
         expect(subject.total_cost).to eq(0)
       end
     end
-
     context 'with items' do
       it 'returns the total cost of all items' do
         subject.add broadcaster_1, standard_delivery
@@ -65,6 +64,53 @@ describe 'Order object features tests' do
         subject.add broadcaster_3, express_delivery
 
         expect(subject.total_cost).to eq(40.5)
+      end
+    end
+  end
+
+  describe '#output' do
+    context 'empty' do
+      it 'prints empty cart message' do
+        expect(subject.output).to eq(Order::MESSAGES[:empty_cart])
+      end
+    end
+    context 'with items' do
+      it 'prints a list of items and total cost' do
+        subject.add broadcaster_1, standard_delivery
+        subject.add broadcaster_2, express_delivery
+
+        expectation = %r{.*#{subject.material.identifier}.*
+          #{subject.items[0][0].name}.*
+          #{subject.items[0][1].name}.*
+          #{subject.items[0][1].price}.*
+          #{subject.items[1][0].name}.*
+          #{subject.items[1][1].name}.*
+          #{subject.items[1][1].price}.*
+          #{subject.items_cost}.*
+          }xm
+        expect(subject.output).to match(expectation)
+      end
+    end
+    context 'with items and applicable discounts' do
+      it 'prints a list of items, total discount applied and final cost' do
+        subject.discount = DiscountExpressDelivery.new(subject)
+
+        subject.add broadcaster_1, express_delivery
+        subject.add broadcaster_2, express_delivery
+        subject.add broadcaster_3, express_delivery
+
+        expectation = %r{.*#{subject.material.identifier}.*
+          #{subject.items[0][0].name}.*
+          #{subject.items[0][1].name}.*
+          #{subject.items[0][1].price}.*
+          #{subject.items[1][0].name}.*
+          #{subject.items[1][1].name}.*
+          #{subject.items[1][1].price}.*
+          #{subject.items_cost}.*
+          #{subject.get_discount}.*
+          #{subject.total_cost}.*
+          }xm
+        expect(subject.output).to match(expectation)
       end
     end
   end

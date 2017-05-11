@@ -5,6 +5,10 @@ class Order
     price: 8
   }.freeze
 
+  MESSAGES = {
+    empty_cart: "Your cart is empty, please add some items"
+  }.freeze
+
   attr_accessor :material, :items, :discount
 
   def initialize(material)
@@ -21,6 +25,8 @@ class Order
   end
 
   def output
+    return MESSAGES[:empty_cart] if items.count == 0
+
     [].tap do |result|
       result << "Order for #{material.identifier}:"
 
@@ -36,7 +42,11 @@ class Order
       end
 
       result << output_separator
-      result << "Total: $#{total_cost}"
+      result << "Total: $#{items_cost}"
+      result << if self.discount
+        ["Promotions applied: $#{get_discount}",
+        "Grand total: $#{total_cost}"]
+      end
     end.join("\n")
   end
 
@@ -44,11 +54,11 @@ class Order
     items.inject(0) { |memo, (_, delivery)| memo += delivery.price }
   end
 
-  private
-
   def get_discount
     self.discount ? self.discount.calculate : 0
   end
+
+  private
 
   def output_separator
     @output_separator ||= COLUMNS.map { |_, width| '-' * width }.join(' | ')
