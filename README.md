@@ -28,7 +28,7 @@ Also, a DiscountManager can be initialized and many Discount objects can be regi
 
 ## Installation
 
-- Download repo: `git clone ########`
+- Download repo: `git clone git@github.com:mrenrich84/makers-test.git`
 - You might need to install used Ruby version: `rvm install ruby-2.3.3`
 - Install all dependencies: `bundle install`
 
