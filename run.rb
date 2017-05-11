@@ -4,25 +4,54 @@ require './models/broadcaster'
 require './models/delivery'
 require './models/material'
 require './models/order'
+require './models/printer_order'
+require './models/discount_manager'
+require './models/discount_express_delivery'
+require './models/discount_10percent'
 
 standard_delivery = Delivery.new(:standard, 10.0)
 express_delivery = Delivery.new(:express, 20.0)
 
-broadcaster_1 = Broadcaster.new(1, 'Viacom')
-broadcaster_2 = Broadcaster.new(2, 'Disney')
-broadcaster_3 = Broadcaster.new(3, 'Discovery')
-broadcaster_4 = Broadcaster.new(4, 'ITV')
-broadcaster_5 = Broadcaster.new(5, 'Channel 4')
-broadcaster_6 = Broadcaster.new(6, 'Bike Channel')
-broadcaster_7 = Broadcaster.new(7, 'Horse and Country')
+broadcaster_viacom = Broadcaster.new(1, 'Viacom')
+broadcaster_disney = Broadcaster.new(2, 'Disney')
+broadcaster_discovery = Broadcaster.new(3, 'Discovery')
+broadcaster_horse_and_country = Broadcaster.new(7, 'Horse and Country')
 
-material = Material.new('WNP/SWCL001/010')
+material_wnp = Material.new('WNP/SWCL001/010')
+material_zdw = Material.new('ZDW/EOWW005/010')
 
-order = Order.new(material)
+####### FIRST ORDER
+puts "First Order"
+order1 = Order.new(material_wnp)
 
-order.add broadcaster_1, standard_delivery
-order.add broadcaster_2, standard_delivery
-order.add broadcaster_3, express_delivery
+order1.printer = PrinterOrder.new(order1)
 
-print order.output
+order1.discount = DiscountManager.new(order1)
+order1.discount.add DiscountExpressDelivery.new(order1)
+order1.discount.add Discount10Percent.new(order1)
+
+order1.add broadcaster_disney, standard_delivery
+order1.add broadcaster_discovery, standard_delivery
+order1.add broadcaster_viacom, standard_delivery
+order1.add broadcaster_horse_and_country, express_delivery
+
+print order1.output
+print "\n\n\n\n"
+
+####### SECOND ORDER
+puts "Second Order"
+
+order2 = Order.new(material_zdw)
+
+order2.printer = PrinterOrder.new(order2)
+
+order2.discount = DiscountManager.new(order2)
+order2.discount.add DiscountExpressDelivery.new(order2)
+order2.discount.add Discount10Percent.new(order2)
+
+order2.add broadcaster_disney, express_delivery
+order2.add broadcaster_discovery, express_delivery
+order2.add broadcaster_viacom, express_delivery
+
+print order2.output
 print "\n"
