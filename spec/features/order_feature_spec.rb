@@ -21,6 +21,41 @@ describe 'Order object features tests' do
 
   let(:printer) { PrinterOrder.new(subject) }
 
+  describe "User Stories" do
+
+    context "when sending an item to 3 broadcasters via Standard Delivery and 1 broadcaster via Express Delivery" do
+      it "the total should be $45.00" do
+        discount_manager = DiscountManager.new(subject)
+        discount_manager.add DiscountExpressDelivery.new(subject)
+        discount_manager.add Discount10Percent.new(subject)
+
+        subject.discount = discount_manager
+
+        subject.add broadcaster_1, standard_delivery
+        subject.add broadcaster_2, standard_delivery
+        subject.add broadcaster_3, standard_delivery
+        subject.add broadcaster_4, express_delivery
+
+        expect(subject.total_cost).to eq(45)
+      end
+    end
+    context "when sending an item to 3 broadcasters via Express Delivery" do
+      it "the total should be $40.50" do
+        discount_manager = DiscountManager.new(subject)
+        discount_manager.add DiscountExpressDelivery.new(subject)
+        discount_manager.add Discount10Percent.new(subject)
+
+        subject.discount = discount_manager
+
+        subject.add broadcaster_1, express_delivery
+        subject.add broadcaster_2, express_delivery
+        subject.add broadcaster_3, express_delivery
+
+        expect(subject.total_cost).to eq(40.5)
+      end
+    end
+  end
+
   describe '#total_cost' do
     context 'empty' do
       it 'costs nothing' do
