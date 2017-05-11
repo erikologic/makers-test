@@ -42,4 +42,4 @@ You can either run it through:
 ## Backlog
 Having more time I would have liked to:
 - extrapolate abstract behaviours from PrinterOrder, so to have a more dynamic Printer system
-- add names to the Discount objects in order to be able to show them in the order report
+- add name properties to the Discount objects in order to be able to show them in the order report
