@@ -4,6 +4,7 @@ require './models/material'
 require './models/discount_manager'
 require './models/discount_express_delivery'
 require './models/discount_10percent'
+require './models/discount_20percent_in_july'
 require './models/printer_order'
 require './models/order'
 
@@ -97,6 +98,15 @@ describe 'Order object features tests' do
         subject.add broadcaster_3, express_delivery
 
         expect(subject.total_cost).to eq(40.5)
+      end
+      it 'will apply a 20% discounts instead of 10% for July only' do
+        subject.discount = Discount20PercentInJuly.new
+
+        subject.add broadcaster_1, express_delivery
+        subject.add broadcaster_2, express_delivery
+        subject.add broadcaster_3, express_delivery
+
+        expect(subject.total_cost).to eq(48)
       end
     end
   end
