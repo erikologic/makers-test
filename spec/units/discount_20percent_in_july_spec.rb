@@ -15,38 +15,40 @@ describe Discount20PercentInJuly do
   subject { described_class.new}
 
   describe '#calculate' do
-    xit 'accepts an initial discount value' do
-      expect{subject.calculate(order, 5)}.not_to raise_error
-    end
-
-    context 'empty order' do
-      xit 'calculate discount to 0' do
+    context 'when is July but items are less then 30$' do
+      it 'returns 0' do
+        order.date = Date.new(2017,7,1)
+        order.add broadcaster_1, express_delivery
         expect(subject.calculate(order)).to eq(0)
+
       end
     end
+    context 'when we have items with value above 30$ but is not July' do
+      it 'returns 0' do
+        order.date = Date.new(2017,1,1)
 
-    context 'with items' do
-      xit 'returns 0 if no conditions apply' do
-        order.add broadcaster_1, standard_delivery
-        order.add broadcaster_2, express_delivery
-        expect(subject.calculate(order)).to eq(0)
-      end
-
-      xit 'calculates a 10% off on order above 30$' do
-        order.add broadcaster_1, standard_delivery
-        order.add broadcaster_2, standard_delivery
-        order.add broadcaster_3, standard_delivery
-        order.add broadcaster_4, express_delivery
-
-        expect(subject.calculate(order)).to eq(5.0)
-      end
-
-      xit 'discount has to be applied on discounted total' do
         order.add broadcaster_1, express_delivery
         order.add broadcaster_2, express_delivery
         order.add broadcaster_3, express_delivery
 
-        expect(subject.calculate(order, 15)).to eq(4.5)
+        expect(subject.calculate(order)).to eq(0)
+      end
+    end
+    context 'when we have items with value above 30$ and is July' do
+      before do
+        order.date = Date.new(2017,7,1)
+
+        order.add broadcaster_1, express_delivery
+        order.add broadcaster_2, express_delivery
+        order.add broadcaster_3, express_delivery
+      end
+      it 'calculates a discount with a 20% percent off the total cost' do
+        expect(subject.calculate(order)).to eq(12)
+      end
+      context 'when a discount has been already applied' do
+        it 'brings in the calculation the discount applied' do
+          expect(subject.calculate(order,6)).to eq(10.8)
+        end
       end
     end
   end

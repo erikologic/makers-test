@@ -1,9 +1,12 @@
+require 'date'
+
 class Order
-  attr_accessor :material, :items, :discount, :printer
+  attr_accessor :material, :items, :discount, :printer, :date
 
   def initialize(material)
     self.material = material
     self.items = []
+    self.date = Date.today
   end
 
   def add(broadcaster, delivery)

@@ -46,4 +46,15 @@ describe Order do
       end
     end
   end
+
+  describe '#date' do
+    it 'returnst today if no date has been provided' do
+      expect(subject.date).to eq(Date.today)
+    end
+    it 'can be set to a different date' do
+      test_date = Date.new(17,07,01)
+      subject.date = test_date
+      expect(subject.date).to eq(test_date)
+    end
+  end
 end
